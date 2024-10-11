@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa Eletrônico</title>
+</head>
+
+<body>
+    
+    <script>
+
+let nomeUsuario = "";
+let saldo = 1000; // saldo inicial
+let extrato = []; // lista para registrar transações
+const senhaCorreta = 3589; // senha fixa para validação
+
+function iniciar() {
+    nomeUsuario = prompt("Digite seu nome: ");
+    alert(`Olá ${nomeUsuario}, é um prazer ter você por aqui!`);
+    menuPrincipal();
+}
+
+function menuPrincipal() {
+    let opcao;
+    do {
+        opcao = parseInt(prompt("=== MENU ===\n1. Saldo\n2. Extrato\n3. Saque\n4. Depósito\n5. Transferência\n6. Sair\nEscolha uma opção:"));
+        
+        switch (opcao) {
+            case 1:
+                verificarSenha();
+                verSaldo();
+                break;
+            case 2:
+                verificarSenha();
+                verExtrato();
+                break;
+            case 3:
+                verificarSenha();
+                realizarSaque();
+                break;
+            case 4:
+                realizarDeposito();
+                break;
+            case 5:
+                verificarSenha();
+                realizarTransferencia();
+                break;
+            case 6:
+                encerrarSistema();
+                break;
+            default:
+                alert("Opção inválida! Tente novamente.");
+        }
+    } while (opcao !== 6);
+}
+
+function verificarSenha() {
+    const senha = parseInt(prompt("Informe sua senha: "));
+    if (senha !== senhaCorreta) {
+        alert("Senha incorreta! Tente novamente.");
+        verificarSenha();
+    }
+}
+
+function verSaldo() {
+    alert(`Seu saldo atual é: R$${saldo.toFixed(2)}`);
+}
+
+function verExtrato() {
+    if (extrato.length > 0) {
+        alert("=== Extrato ===\n" + extrato.join("\n"));
+    } else {
+        alert("Não há transações registradas.");
+    }
+}
+
+function realizarSaque() {
+    const valor = parseFloat(prompt("Informe o valor do saque: "));
+    if (valor <= 0) {
+        alert("Operação não autorizada. O valor do saque deve ser maior que zero.");
+        return;
+    }
+    if (valor > saldo) {
+        alert("Operação não autorizada. Saldo insuficiente.");
+        return;
+    }
+    saldo -= valor;
+    extrato.push(`Saque: R$${valor.toFixed(2)}`);
+    alert(`Saque de R$${valor.toFixed(2)} realizado com sucesso!`);
+}
+
+function realizarDeposito() {
+    const valor = parseFloat(prompt("Informe o valor do depósito: "));
+    if (valor <= 0) {
+        alert("Operação não autorizada. O valor do depósito deve ser maior que zero.");
+        return;
+    }
+    saldo += valor;
+    extrato.push(`Depósito: R$${valor.toFixed(2)}`);
+    alert(`Depósito de R$${valor.toFixed(2)} realizado com sucesso!`);
+}
+
+function realizarTransferencia() {
+    const numeroConta = prompt("Informe o número da conta (somente números): ");
+    if (!/^\d+$/.test(numeroConta)) {
+        alert("Operação não autorizada. O número da conta deve conter apenas dígitos.");
+        return;
+    }
+    
+    const valor = parseFloat(prompt("Informe o valor da transferência: "));
+    if (valor <= 0) {
+        alert("Operação não autorizada. O valor da transferência deve ser maior que zero.");
+        return;
+    }
+    if (valor > saldo) {
+        alert("Operação não autorizada. Saldo insuficiente.");
+        return;
+    }
+    
+    saldo -= valor;
+    extrato.push(`Transferência para a conta ${numeroConta}: R$${valor.toFixed(2)}`);
+    alert(`Transferência de R$${valor.toFixed(2)} para a conta ${numeroConta} realizada com sucesso!`);
+}
+
+function encerrarSistema() {
+    alert(`${nomeUsuario}, foi um prazer ter você por aqui!`);
+}
+
+// Inicia o sistema
+iniciar();
+
+    </script>
+</body>
+</html>
