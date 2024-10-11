@@ -1,6 +1,6 @@
 # Caixa_Eletronico #
 
-Este projeto implementa um caixa eletrônico interativo utilizando HTML, Bootstrap e JavaScript, com foco em segurança e funcionalidades essenciais para simular uma experiência bancária.
+Este projeto implementa um caixa eletrônico interativo utilizando JavaScript com foco em funcionalidades essenciais para simular uma experiência bancária.
 
 Funcionalidades:
 
